@@ -12,19 +12,8 @@ this ReadMe explains the working process of how to set the enviornment for use o
     sudo apt-get update
     sudo apt-get install docker-ce
     sudo service docker restart
-
-Then, proceed to adding the required repositories and installing the needed software:
-
-Start with `nvidia-docker-runtime`:
-
-**For Ubuntu distributions (Xenial x86_64):**
-
-First, if you have older nvidia-docker installations, purge the installation and all associated GPU containers:
-
     docker volume ls -q -f driver=nvidia-docker | xargs -r -I{} -n1 docker ps -q -a -f volume={} | xargs -r docker rm -f
     sudo apt-get purge -y nvidia-docker
-
-Then proceed:
 
     curl -s -L https://nvidia.github.io/nvidia-container-runtime/gpgkey | \
       sudo apt-key add -
@@ -32,9 +21,16 @@ Then proceed:
       sudo tee /etc/apt/sources.list.d/nvidia-container-runtime.list
     sudo apt-get update
     
-    # Install nvidia-docker2 and reload the Docker daemon configuration
     sudo apt-get install -y nvidia-docker2
     sudo pkill -SIGHUP dockerd
 
-    # Test nvidia-smi with the latest official CUDA image
     docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
+
+
+    git clone https://github.com/lmb-freiburg/flownet2-docker
+
+    cd ~/flownet2-docker 
+    
+    make
+    
+### Follow how to make opticalflow with instruction here: https://github.com/lmb-freiburg/flownet2-docker
