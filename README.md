@@ -1,10 +1,10 @@
 # Flownet2 With Nvidia Docker
 this ReadMe explains the working process of how to set the enviornment for use of flownet2 with nvidia_docker
 
-# Launch your instance with dl_ami AWS launch template and Connect to it 
+### Launch your instance with dl_ami AWS launch template and Connect to it 
 > ssh -i "XXXX.pem" ubuntu@ecX-XX-XXX-XX-XX.us-east-2.compute.amazonaws.com
 
-# Execute the Following commands in order
+### Execute the Following commands in order
 
     curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     sudo apt-key fingerprint 0EBFCD88
@@ -33,3 +33,8 @@ Then proceed:
     sudo apt-get update
     
     # Install nvidia-docker2 and reload the Docker daemon configuration
+    sudo apt-get install -y nvidia-docker2
+    sudo pkill -SIGHUP dockerd
+
+    # Test nvidia-smi with the latest official CUDA image
+    docker run --runtime=nvidia --rm nvidia/cuda nvidia-smi
